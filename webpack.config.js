@@ -1,7 +1,6 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
     entry: './src/app.js',
@@ -13,28 +12,26 @@ module.exports = {
         rules: [
             {
                 test: /\.scss$/,
-                use:['style-loader','css-loader', 'sass-loader']
-               /* use: ExtractTextPlugin.extract({
+                use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     loader: ['css-loader', 'sass-loader'],
                     publicPath: "/dist"
-                })*/
+                })
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
+                exclude:/node_modules/,
                 use: 'babel-loader'
 
             }
         ]
     },
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
+        contentBase: path.join(__dirname,"dist"),
         compress: true,
-        port: 8088,
-        hot: true,
-        // stats: "errors-only",
-        open: true
+        port:8088,
+       // stats: "errors-only",
+        open:true
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -43,14 +40,10 @@ module.exports = {
             hash: true,
             template: './src/index.ejs'
         }),
-     /*   new ExtractTextPlugin({
+        new ExtractTextPlugin({
             filename: "app.css",
-            disable: true,
+            disable: false,
             allChunks: true
-        }),*/
-        new webpack.HotModuleReplacementPlugin(),
-        // enable HMR globally
-
-        new webpack.NamedModulesPlugin()
+        })
     ]
 }
